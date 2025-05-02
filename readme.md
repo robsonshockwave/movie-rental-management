@@ -10,10 +10,10 @@ Um aluguel possui um cliente e um filme
 
 ## Usecase
 
-[] Cadastrar um usuário
-[] Cpf e email devem ser únicos
-[] Buscar um cliente por Cpf
-[] Retornar um cliente ou vazio
+[X] Cadastrar um usuário
+[X] Cpf e email devem ser únicos
+[X] Buscar um cliente por Cpf
+[X] Retornar um cliente ou vazio
 
 [] Cadastrar um filme
 [] ISAN deve ser único
