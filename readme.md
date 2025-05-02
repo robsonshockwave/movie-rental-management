@@ -13,7 +13,7 @@ Um aluguel possui um cliente e um filme
 [] Cadastrar um usuário
 [] Cpf e email devem ser únicos
 [] Buscar um cliente por Cpf
-[] Retornar um client ou vazio
+[] Retornar um cliente ou vazio
 
 [] Cadastrar um filme
 [] ISAN deve ser único
