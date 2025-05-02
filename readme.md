@@ -26,7 +26,7 @@ Um aluguel possui um cliente e um filme
 [X] Um cliente não pode ter mais de um filme alugado com o mesmo ISAN ao mesmo tempo
 [X] Ao alugar um filme, será enviado um email automaticamente informando o nome do filme, nome do cliente, cpf, data de solicitação e a data para entrega
 
-[] Devolver o filme alugado com o valor de R$ 10,00
-[] Caso o cliente atrase, será gerada uma multa de R$ 5,00 por dia
+[X] Devolver o filme alugado com o valor de R$ 10,00
+[X] Caso o cliente atrase, será gerada uma multa de R$ 5,00 por dia
 
-[] Mostrar todos os filmes alugados pendentes, com o nome do filme, nome do cliente, cpf, data de solicitação e data de retorno, Ordenado pela data de solicitação mais recente e com paginação
+[X] Mostrar todos os filmes alugados pendentes, com o nome do filme, nome do cliente, cpf, data de solicitação e data de retorno, Ordenado pela data de solicitação mais recente e com paginação

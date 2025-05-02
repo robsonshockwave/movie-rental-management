@@ -7,4 +7,5 @@ export class AppError extends Error {
   static dependencies = 'Alguma dependência obrigatória não foi fornecida';
   static missingMandatoryParameters =
     'Algum parametro obrigatório não foi fornecido';
+  static invalidDates = 'Datas inválidas';
 }

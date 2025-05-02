@@ -11,6 +11,7 @@ describe('GetPendingHiresUseCase', () => {
       thisMovieHiredByClient: jest.fn(),
       getHireWithClientAndMovieById: jest.fn(),
       getPendingHires: jest.fn(),
+      returnMovie: jest.fn(),
     };
   });
 
@@ -21,6 +22,7 @@ describe('GetPendingHiresUseCase', () => {
       id: 'any_id',
       movie_id: 'any_movie_id',
       requested_date: '2025-01-01',
+      return_date: null,
       client: {
         address: 'any_address',
         cpf: 'any_cpf',

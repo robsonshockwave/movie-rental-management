@@ -12,4 +12,5 @@ export interface IHireRepository {
   thisMovieHiredByClient(client_id: string, movie_id: string): Promise<boolean>;
   getHireWithClientAndMovieById(id: string): Promise<IHireWithClientAndMovie>;
   getPendingHires(): Promise<IHireWithClientAndMovie[]>;
+  returnMovie(hire_id: string, return_date: string): Promise<IHire>;
 }

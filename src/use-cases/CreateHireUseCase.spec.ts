@@ -16,6 +16,7 @@ describe('CreateHireUseCase', () => {
       thisMovieHiredByClient: jest.fn(),
       getHireWithClientAndMovieById: jest.fn(),
       getPendingHires: jest.fn(),
+      returnMovie: jest.fn(),
     };
   });
 
@@ -31,6 +32,7 @@ describe('CreateHireUseCase', () => {
     requested_date: hireRequestDTO.requested_date.toISOString(),
     delivery_date: hireRequestDTO.delivery_date.toISOString(),
     id: 'any_id',
+    return_date: null,
   };
 
   test('should create a hire', async () => {
@@ -41,6 +43,7 @@ describe('CreateHireUseCase', () => {
       id: 'any_id',
       movie_id: 'any_movie_id',
       requested_date: '2025-01-01',
+      return_date: null,
       client: {
         address: 'any_address',
         cpf: 'any_cpf',

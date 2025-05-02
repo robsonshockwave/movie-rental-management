@@ -9,4 +9,5 @@ export class Hire {
 
 export type IHire = Hire & {
   id: string;
+  return_date: string | null;
 };

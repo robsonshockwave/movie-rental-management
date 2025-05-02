@@ -26,6 +26,7 @@ describe('CreateMovieUseCase', () => {
   const movieResponseDTO = {
     ...movieResquestDTO,
     id: 'any_id',
+    return_date: null,
   };
 
   test('should create a movie', async () => {
