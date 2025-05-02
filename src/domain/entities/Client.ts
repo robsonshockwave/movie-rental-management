@@ -8,6 +8,7 @@ export class Client {
   ) {}
 }
 
+// model
 export type IClient = Client & {
   id: string;
 };
