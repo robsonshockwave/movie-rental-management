@@ -15,6 +15,7 @@ describe('CreateHireUseCase', () => {
       create: jest.fn(),
       thisMovieHiredByClient: jest.fn(),
       getHireWithClientAndMovieById: jest.fn(),
+      getPendingHires: jest.fn(),
     };
   });
 
@@ -35,6 +36,11 @@ describe('CreateHireUseCase', () => {
   test('should create a hire', async () => {
     hireRepository.create.mockResolvedValue(hireResponseDTO);
     hireRepository.getHireWithClientAndMovieById.mockResolvedValue({
+      client_id: 'any_client_id',
+      delivery_date: '2025-01-02',
+      id: 'any_id',
+      movie_id: 'any_movie_id',
+      requested_date: '2025-01-01',
       client: {
         address: 'any_address',
         cpf: 'any_cpf',
@@ -42,13 +48,6 @@ describe('CreateHireUseCase', () => {
         id: 'any_id',
         name: 'any_name',
         phone: 'any_phone',
-      },
-      hire: {
-        client_id: 'any_client_id',
-        delivery_date: '2025-01-02',
-        id: 'any_id',
-        movie_id: 'any_movie_id',
-        requested_date: '2025-01-01',
       },
       movie: {
         author: 'any_author',
