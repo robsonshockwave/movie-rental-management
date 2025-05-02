@@ -1,9 +1,9 @@
 import { typeormServer } from './setup';
 
 beforeAll(async () => {
-  await typeormServer?.initialize();
+  await typeormServer.initialize();
 });
 
 afterAll(async () => {
-  await typeormServer?.destroy();
+  await typeormServer.destroy();
 });
