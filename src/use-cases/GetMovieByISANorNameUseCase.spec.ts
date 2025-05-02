@@ -24,12 +24,12 @@ describe('CreateMovieUseCase', () => {
   };
 
   test('should return a movie if isan is registered', async () => {
-    movieRepository.findByISANorName.mockResolvedValue(movieResponseDTO);
+    movieRepository.findByISANorName.mockResolvedValue([movieResponseDTO]);
     const sut = new GetMovieByISANorNameUseCase(movieRepository);
 
     const movie = await sut.execute({ value: movieResponseDTO.ISAN });
 
-    expect(movie.getRight()).toEqual(movieResponseDTO);
+    expect(movie.getRight()).toEqual([movieResponseDTO]);
     expect(movieRepository.findByISANorName).toHaveBeenCalledTimes(1);
     expect(movieRepository.findByISANorName).toHaveBeenCalledWith(
       movieResponseDTO.ISAN

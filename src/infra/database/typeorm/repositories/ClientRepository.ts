@@ -2,7 +2,7 @@ import { Repository } from 'typeorm';
 import { Client } from '../../../../domain/entities/Client';
 import { IClientRepository } from '../../../../domain/repositories/IClientRepository';
 import { typeormServer } from '../setup';
-import { ClientTypeorm } from '../entities/Client.typeorm';
+import { ClientTypeorm } from '../entities/Client';
 
 export class ClientRepository implements IClientRepository {
   private ormRepository: Repository<ClientTypeorm>;
