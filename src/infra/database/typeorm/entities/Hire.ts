@@ -22,7 +22,7 @@ export class HireTypeorm implements IHire {
   @Column()
   delivery_date: string;
 
-  @Column({ nullable: true })
+  @Column({ type: 'text', nullable: true })
   return_date: string | null;
 
   @ManyToOne(() => ClientTypeorm)

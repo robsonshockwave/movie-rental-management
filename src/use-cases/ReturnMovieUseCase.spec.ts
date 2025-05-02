@@ -23,6 +23,22 @@ describe('ReturnMovieUseCase', () => {
     movie_id: 'any_movie_id',
     requested_date: '2025-01-01',
     return_date: null,
+    client: {
+      address: 'any_address',
+      cpf: 'any_cpf',
+      email: 'any_email',
+      id: 'any_id',
+      name: 'any_name',
+      phone: 'any_phone',
+    },
+    movie: {
+      author: 'any_author',
+      genre: 'any_genre',
+      id: 'any_id',
+      ISAN: 'any_ISAN',
+      name: 'any_name',
+      quantity: 1,
+    },
   };
 
   test('should return a movie within the deadline', async () => {

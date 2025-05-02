@@ -25,6 +25,7 @@ describe('CreateHireUseCase', () => {
     movie_id: 'any_movie_id',
     requested_date: new Date('2025-01-01'),
     delivery_date: new Date('2025-01-02'),
+    return_date: null,
   };
 
   const hireResponseDTO = {
@@ -32,7 +33,22 @@ describe('CreateHireUseCase', () => {
     requested_date: hireRequestDTO.requested_date.toISOString(),
     delivery_date: hireRequestDTO.delivery_date.toISOString(),
     id: 'any_id',
-    return_date: null,
+    client: {
+      address: 'any_address',
+      cpf: 'any_cpf',
+      email: 'any_email',
+      id: 'any_id',
+      name: 'any_name',
+      phone: 'any_phone',
+    },
+    movie: {
+      author: 'any_author',
+      genre: 'any_genre',
+      id: 'any_id',
+      ISAN: 'any_ISAN',
+      name: 'any_name',
+      quantity: 1,
+    },
   };
 
   test('should create a hire', async () => {
@@ -69,9 +85,11 @@ describe('CreateHireUseCase', () => {
     expect(hire.getRight()).toBeNull();
     expect(hireRepository.create).toHaveBeenCalledTimes(1);
     expect(hireRepository.create).toHaveBeenCalledWith({
-      ...hireRequestDTO,
+      client_id: hireRequestDTO.client_id,
+      movie_id: hireRequestDTO.movie_id,
       requested_date: hireRequestDTO.requested_date.toISOString(),
       delivery_date: hireRequestDTO.delivery_date.toISOString(),
+      return_date: hireRequestDTO.return_date,
     });
   });
 

@@ -6,8 +6,8 @@ describe('MovieRepository', () => {
   const movieRepository = typeormServer.getRepository(MovieTypeorm);
   const sut = new MovieRepository();
 
-  beforeEach(() => {
-    movieRepository.delete({});
+  beforeEach(async () => {
+    await movieRepository.delete({});
   });
 
   const movieDTO = {

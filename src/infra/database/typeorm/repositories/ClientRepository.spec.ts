@@ -6,8 +6,8 @@ describe('ClientRepository', () => {
   const clientRepository = typeormServer.getRepository(ClientTypeorm);
   const sut = new ClientRepository();
 
-  beforeEach(() => {
-    clientRepository.delete({});
+  beforeEach(async () => {
+    await clientRepository.delete({});
   });
 
   const clientDTO = {
