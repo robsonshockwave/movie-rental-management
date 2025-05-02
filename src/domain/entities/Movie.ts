@@ -7,3 +7,7 @@ export class Movie {
     public author: string
   ) {}
 }
+
+export type IMovie = Movie & {
+  id: string;
+};

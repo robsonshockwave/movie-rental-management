@@ -1,7 +1,7 @@
-import { Movie } from '../entities/Movie';
+import { IMovie, Movie } from '../entities/Movie';
 
 export interface IMovieRepository {
-  create(movie: Movie): Promise<Movie>;
-  findByISAN(ISAN: string): Promise<Movie | []>;
-  findByISANorName(value: string): Promise<Movie | []>;
+  create(movie: Movie): Promise<IMovie>;
+  findByISAN(ISAN: string): Promise<IMovie | []>;
+  findByISANorName(value: string): Promise<IMovie | []>;
 }

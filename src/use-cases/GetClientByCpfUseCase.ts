@@ -2,7 +2,7 @@ import { IClientRepository } from '../domain/repositories/IClientRepository';
 import { AppError } from '../shared/utils/AppError';
 import { Either } from '../shared/utils/Either';
 
-export class GetUserByCpfUseCase {
+export class GetClientByCpfUseCase {
   constructor(private clientRepository: IClientRepository) {}
 
   async execute(cpf: string) {

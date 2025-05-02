@@ -15,7 +15,7 @@ describe('CreateMovieUseCase', () => {
     };
   });
 
-  const movieDTO = {
+  const movieResquestDTO = {
     name: 'any_name',
     genre: 'any_genre',
     quantity: 1,
@@ -23,37 +23,44 @@ describe('CreateMovieUseCase', () => {
     author: 'any_author',
   };
 
+  const movieResponseDTO = {
+    ...movieResquestDTO,
+    id: 'any_id',
+  };
+
   test('should create a movie', async () => {
     const sut = new CreateMovieUseCase(movieRepository);
 
-    const movie = await sut.execute(movieDTO);
+    const movie = await sut.execute(movieResquestDTO);
 
     expect(movie.getRight()).toBeNull();
     expect(movieRepository.create).toHaveBeenCalledTimes(1);
-    expect(movieRepository.create).toHaveBeenCalledWith(movieDTO);
+    expect(movieRepository.create).toHaveBeenCalledWith(movieResquestDTO);
   });
 
   test('should return error if repository is not provided', async () => {
     const sut = new CreateMovieUseCase(undefined as any);
 
-    await expect(sut.execute(movieDTO)).rejects.toThrow(
+    await expect(sut.execute(movieResquestDTO)).rejects.toThrow(
       new AppError(AppError.dependencies)
     );
   });
 
   test('should return error if movie already exists by ISAN', async () => {
-    movieRepository.findByISAN.mockResolvedValue(movieDTO);
+    movieRepository.findByISAN.mockResolvedValue(movieResponseDTO);
 
     const sut = new CreateMovieUseCase(movieRepository);
 
-    const movie = await sut.execute(movieDTO);
+    const movie = await sut.execute(movieResquestDTO);
 
     expect(movie.getRight()).toBeNull();
     expect(movie.getLeft()).toEqual(
-      Either.valueAlreadyRegistered(movieDTO.ISAN)
+      Either.valueAlreadyRegistered(movieResquestDTO.ISAN)
     );
     expect(movieRepository.findByISAN).toHaveBeenCalledTimes(1);
-    expect(movieRepository.findByISAN).toHaveBeenCalledWith(movieDTO.ISAN);
+    expect(movieRepository.findByISAN).toHaveBeenCalledWith(
+      movieResquestDTO.ISAN
+    );
   });
 
   test('should return error if mandatory parameters are not provided', async () => {

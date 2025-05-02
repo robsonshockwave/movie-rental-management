@@ -1,8 +1,8 @@
 import { IClientRepository } from '../domain/repositories/IClientRepository';
 import { AppError } from '../shared/utils/AppError';
-import { GetUserByCpfUseCase } from './GetUserByCpfUseCase';
+import { GetClientByCpfUseCase } from './GetClientByCpfUseCase';
 
-describe('GetUserByCpfUseCase', () => {
+describe('GetClientByCpfUseCase', () => {
   let clientRepository: jest.Mocked<IClientRepository>;
 
   beforeEach(() => {
@@ -19,12 +19,13 @@ describe('GetUserByCpfUseCase', () => {
     phone: 'any_phone',
     email: 'any_email',
     address: 'any_address',
+    id: 'any_id',
   };
 
   test('should get a client by cpf', async () => {
     clientRepository.findByCpf.mockResolvedValue(clientDTO);
 
-    const sut = new GetUserByCpfUseCase(clientRepository);
+    const sut = new GetClientByCpfUseCase(clientRepository);
 
     const client = await sut.execute(clientDTO.cpf);
 
@@ -34,7 +35,7 @@ describe('GetUserByCpfUseCase', () => {
   });
 
   test('should return error if repository is not provided', async () => {
-    const sut = new GetUserByCpfUseCase(undefined as any);
+    const sut = new GetClientByCpfUseCase(undefined as any);
 
     await expect(sut.execute(clientDTO.cpf)).rejects.toThrow(
       new AppError(AppError.dependencies)
@@ -44,7 +45,7 @@ describe('GetUserByCpfUseCase', () => {
   test('should return error if client not found', async () => {
     clientRepository.findByCpf.mockResolvedValue(null);
 
-    const sut = new GetUserByCpfUseCase(clientRepository);
+    const sut = new GetClientByCpfUseCase(clientRepository);
 
     const client = await sut.execute(clientDTO.cpf);
 
@@ -54,7 +55,7 @@ describe('GetUserByCpfUseCase', () => {
   });
 
   test('should return error if cpf is not provided', async () => {
-    const sut = new GetUserByCpfUseCase(clientRepository);
+    const sut = new GetClientByCpfUseCase(clientRepository);
 
     await expect(sut.execute('')).rejects.toThrow(
       new AppError(AppError.missingMandatoryParameters)

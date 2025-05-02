@@ -15,7 +15,7 @@ describe('CreateClientUseCase', () => {
     };
   });
 
-  const clientDTO = {
+  const clientRequestDTO = {
     name: 'any_name',
     cpf: 'any_cpf',
     phone: 'any_phone',
@@ -23,52 +23,61 @@ describe('CreateClientUseCase', () => {
     address: 'any_address',
   };
 
+  const clientResponseDTO = {
+    ...clientRequestDTO,
+    id: 'any_id',
+  };
+
   test('should create a client', async () => {
     const sut = new CreateClientUseCase(clientRepository);
 
-    const client = await sut.execute(clientDTO);
+    const client = await sut.execute(clientRequestDTO);
 
     expect(client.getRight()).toBeNull();
     expect(clientRepository.create).toHaveBeenCalledTimes(1);
-    expect(clientRepository.create).toHaveBeenCalledWith(clientDTO);
+    expect(clientRepository.create).toHaveBeenCalledWith(clientRequestDTO);
   });
 
   test('should return error if repository is not provided', async () => {
     const sut = new CreateClientUseCase(undefined as any);
 
-    await expect(sut.execute(clientDTO)).rejects.toThrow(
+    await expect(sut.execute(clientRequestDTO)).rejects.toThrow(
       new AppError(AppError.dependencies)
     );
   });
 
   test('should return error if client already exists by cpf', async () => {
-    clientRepository.findByCpf.mockResolvedValue(clientDTO);
+    clientRepository.findByCpf.mockResolvedValue(clientResponseDTO);
 
     const sut = new CreateClientUseCase(clientRepository);
 
-    const client = await sut.execute(clientDTO);
+    const client = await sut.execute(clientRequestDTO);
 
     expect(client.getRight()).toBeNull();
     expect(client.getLeft()).toEqual(
-      Either.valueAlreadyRegistered(clientDTO.cpf)
+      Either.valueAlreadyRegistered(clientRequestDTO.cpf)
     );
     expect(clientRepository.findByCpf).toHaveBeenCalledTimes(1);
-    expect(clientRepository.findByCpf).toHaveBeenCalledWith(clientDTO.cpf);
+    expect(clientRepository.findByCpf).toHaveBeenCalledWith(
+      clientRequestDTO.cpf
+    );
   });
 
   test('should return error if client already exists by email', async () => {
-    clientRepository.findByEmail.mockResolvedValue(clientDTO);
+    clientRepository.findByEmail.mockResolvedValue(clientResponseDTO);
 
     const sut = new CreateClientUseCase(clientRepository);
 
-    const client = await sut.execute(clientDTO);
+    const client = await sut.execute(clientRequestDTO);
 
     expect(client.getRight()).toBeNull();
     expect(client.getLeft()).toEqual(
-      Either.valueAlreadyRegistered(clientDTO.email)
+      Either.valueAlreadyRegistered(clientRequestDTO.email)
     );
     expect(clientRepository.findByEmail).toHaveBeenCalledTimes(1);
-    expect(clientRepository.findByEmail).toHaveBeenCalledWith(clientDTO.email);
+    expect(clientRepository.findByEmail).toHaveBeenCalledWith(
+      clientRequestDTO.email
+    );
   });
 
   test('should return error if mandatory parameters are not provided', async () => {

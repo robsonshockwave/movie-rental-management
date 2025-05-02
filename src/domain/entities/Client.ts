@@ -7,3 +7,7 @@ export class Client {
     public address: string
   ) {}
 }
+
+export type IClient = Client & {
+  id: string;
+};
