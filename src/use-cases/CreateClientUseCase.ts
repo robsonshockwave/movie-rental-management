@@ -12,6 +12,16 @@ export class CreateClientUseCase {
       throw new AppError(AppError.dependencies);
     }
 
+    if (
+      !data.name ||
+      !data.cpf ||
+      !data.phone ||
+      !data.email ||
+      !data.address
+    ) {
+      throw new AppError(AppError.missingMandatoryParameters);
+    }
+
     const clientByCpf = await this.clientRepository.findByCpf(data.cpf);
     if (clientByCpf) {
       return Either.left(Either.valueAlreadyRegistered(data.cpf));

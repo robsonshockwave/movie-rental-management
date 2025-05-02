@@ -1,6 +1,7 @@
 import { IClientRepository } from '../domain/repositories/IClientRepository';
 import { AppError } from '../shared/utils/AppError';
 import { Either } from '../shared/utils/Either';
+import { CreateClientDTO } from './CreateClientDTO';
 import { CreateClientUseCase } from './CreateClientUseCase';
 
 describe('CreateClientUseCase', () => {
@@ -68,5 +69,15 @@ describe('CreateClientUseCase', () => {
     );
     expect(clientRepository.findByEmail).toHaveBeenCalledTimes(1);
     expect(clientRepository.findByEmail).toHaveBeenCalledWith(clientDTO.email);
+  });
+
+  test('should return error if mandatory parameters are not provided', async () => {
+    const sut = new CreateClientUseCase(clientRepository);
+
+    await expect(
+      sut.execute({
+        name: 'any_name',
+      } as CreateClientDTO)
+    ).rejects.toThrow(new AppError(AppError.missingMandatoryParameters));
   });
 });
