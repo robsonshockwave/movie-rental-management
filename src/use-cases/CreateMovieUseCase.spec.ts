@@ -11,7 +11,7 @@ describe('CreateMovieUseCase', () => {
     movieRepository = {
       create: jest.fn(),
       findByISAN: jest.fn(),
-      findByName: jest.fn(),
+      findByISANorName: jest.fn(),
     };
   });
 
