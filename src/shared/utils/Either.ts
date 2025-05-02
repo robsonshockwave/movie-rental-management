@@ -26,4 +26,12 @@ export class Either<L, R> {
   static valueAlreadyRegistered(value: string) {
     return { message: `${value} já cadastrado.` };
   }
+
+  static dateForReturnLessThanRequestDate = {
+    message: 'Data para retorno menor que data de solicitação',
+  };
+
+  static movieAlreadyHiredByClient = {
+    message: 'Filme ja alugado pelo cliente',
+  };
 }
