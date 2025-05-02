@@ -35,20 +35,20 @@ Um aluguel possui um cliente e um filme
 
 ## clientRepository
 
-[] create(name, cpf, phone, email, address): Promise<IClient>;
-[] findByCpf(cpf): Promise<IClient | null>;
-[] findByEmail(email): Promise<IClient | null>;
+[X] create(name, cpf, phone, email, address): Promise<IClient>;
+[X] findByCpf(cpf): Promise<IClient | null>;
+[X] findByEmail(email): Promise<IClient | null>;
 
 ## movieRepository
 
-[] create(name, genre, quantity, ISAN, author): Promise<IMovie>;
-[] findByISAN(ISAN): Promise<IMovie | []>;
-[] findByISANorName(value): Promise<IMovie | []>;
+[X] create(name, genre, quantity, ISAN, author): Promise<IMovie>;
+[X] findByISAN(ISAN): Promise<IMovie | []>;
+[X] findByISANorName(value): Promise<IMovie | []>;
 
 ## hireRepository
 
-[] create(client_id, movie_id, requested_date, delivery_date): Promise<IHire>;
-[] thisMovieHiredByClient(client_id, movie_id): Promise<boolean>;
-[] getHireWithClientAndMovieById(id): Promise<IHireWithClientAndMovie>;
-[] getPendingHires(): Promise<IHireWithClientAndMovie[]>;
-[] returnMovie(hire_id, return_date): Promise<IHire>;
+[X] create(client_id, movie_id, requested_date, delivery_date): Promise<IHire>;
+[X] thisMovieHiredByClient(client_id, movie_id): Promise<boolean>;
+[X] getHireWithClientAndMovieById(id): Promise<IHireWithClientAndMovie>;
+[X] getPendingHires(): Promise<IHireWithClientAndMovie[]>;
+[X] returnMovie(hire_id, return_date): Promise<IHire>;
