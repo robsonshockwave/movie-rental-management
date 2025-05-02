@@ -1,6 +1,6 @@
 import { IHireRepository } from '../domain/repositories/IHireRepository';
 import { Late } from '../domain/value-objects/Late';
-import { AppError } from '../shared/utils/AppError';
+import { AppError } from '../shared/errors/AppError';
 import { Either } from '../shared/utils/Either';
 import { ReturnMovieDTO } from './ReturnMovieDTO';
 

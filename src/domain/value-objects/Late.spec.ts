@@ -1,4 +1,4 @@
-import { AppError } from '../../shared/utils/AppError';
+import { AppError } from '../../shared/errors/AppError';
 import { Late } from './Late';
 
 describe('Late', () => {

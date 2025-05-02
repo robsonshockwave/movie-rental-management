@@ -1,5 +1,5 @@
 import { IMovieRepository } from '../domain/repositories/IMovieRepository';
-import { AppError } from '../shared/utils/AppError';
+import { AppError } from '../shared/errors/AppError';
 import { GetMovieByISANorNameDTO } from './GetMovieByISANorNameDTO';
 import { GetMovieByISANorNameUseCase } from './GetMovieByISANorNameUseCase';
 

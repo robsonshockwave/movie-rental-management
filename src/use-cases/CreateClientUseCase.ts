@@ -1,6 +1,6 @@
 import { Client } from '../domain/entities/Client';
 import { IClientRepository } from '../domain/repositories/IClientRepository';
-import { AppError } from '../shared/utils/AppError';
+import { AppError } from '../shared/errors/AppError';
 import { Either } from '../shared/utils/Either';
 import { CreateClientDTO } from './CreateClientDTO';
 

@@ -1,5 +1,5 @@
 import { IHireRepository } from '../domain/repositories/IHireRepository';
-import { AppError } from '../shared/utils/AppError';
+import { AppError } from '../shared/errors/AppError';
 import { GetPendingHiresUseCase } from './GetPendingHiresUseCase';
 
 describe('GetPendingHiresUseCase', () => {

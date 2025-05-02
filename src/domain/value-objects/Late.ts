@@ -1,4 +1,4 @@
-import { AppError } from '../../shared/utils/AppError';
+import { AppError } from '../../shared/errors/AppError';
 
 interface LateProps {
   delivery_date: string;

@@ -1,6 +1,6 @@
 import { Movie } from '../domain/entities/Movie';
 import { IMovieRepository } from '../domain/repositories/IMovieRepository';
-import { AppError } from '../shared/utils/AppError';
+import { AppError } from '../shared/errors/AppError';
 import { Either } from '../shared/utils/Either';
 import { CreateMovieDTO } from './CreateMovieDTO';
 
