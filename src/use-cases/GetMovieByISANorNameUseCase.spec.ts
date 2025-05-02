@@ -36,12 +36,12 @@ describe('CreateMovieUseCase', () => {
   });
 
   test('should return null if isan is not registered', async () => {
-    movieRepository.findByISANorName.mockResolvedValue(null);
+    movieRepository.findByISANorName.mockResolvedValue([]);
     const sut = new GetMovieByISANorNameUseCase(movieRepository);
 
     const movie = await sut.execute({ value: movieDTO.ISAN });
 
-    expect(movie.getRight()).toBeNull();
+    expect(movie.getRight()).toEqual([]);
     expect(movieRepository.findByISANorName).toHaveBeenCalledTimes(1);
     expect(movieRepository.findByISANorName).toHaveBeenCalledWith(
       movieDTO.ISAN

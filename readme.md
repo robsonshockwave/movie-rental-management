@@ -17,8 +17,8 @@ Um aluguel possui um cliente e um filme
 
 [X] Cadastrar um filme
 [X] ISAN deve ser único
-[] Buscar um filme por ISAN ou nome
-[] Retornar um filme ou vazio
+[X] Buscar um filme por ISAN ou nome
+[X] Retornar um filme ou vazio
 
 [] Alugar um filme ao cliente
 [] A data de solicitação não deve ser maior que a data para entrega
