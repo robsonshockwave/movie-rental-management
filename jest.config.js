@@ -5,4 +5,5 @@ module.exports = {
   transform: {
     '^.+.tsx?$': ['ts-jest', {}],
   },
+  setupFilesAfterEnv: ['<rootDir>/src/infra/database/typeorm/setup.jest.ts'],
 };

@@ -30,3 +30,25 @@ Um aluguel possui um cliente e um filme
 [X] Caso o cliente atrase, será gerada uma multa de R$ 5,00 por dia
 
 [X] Mostrar todos os filmes alugados pendentes, com o nome do filme, nome do cliente, cpf, data de solicitação e data de retorno, Ordenado pela data de solicitação mais recente e com paginação
+
+## Repositories
+
+## clientRepository
+
+[] create(name, cpf, phone, email, address): Promise<IClient>;
+[] findByCpf(cpf): Promise<IClient | null>;
+[] findByEmail(email): Promise<IClient | null>;
+
+## movieRepository
+
+[] create(name, genre, quantity, ISAN, author): Promise<IMovie>;
+[] findByISAN(ISAN): Promise<IMovie | []>;
+[] findByISANorName(value): Promise<IMovie | []>;
+
+## hireRepository
+
+[] create(client_id, movie_id, requested_date, delivery_date): Promise<IHire>;
+[] thisMovieHiredByClient(client_id, movie_id): Promise<boolean>;
+[] getHireWithClientAndMovieById(id): Promise<IHireWithClientAndMovie>;
+[] getPendingHires(): Promise<IHireWithClientAndMovie[]>;
+[] returnMovie(hire_id, return_date): Promise<IHire>;
