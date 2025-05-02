@@ -15,8 +15,8 @@ Um aluguel possui um cliente e um filme
 [X] Buscar um cliente por Cpf
 [X] Retornar um cliente ou vazio
 
-[] Cadastrar um filme
-[] ISAN deve ser único
+[X] Cadastrar um filme
+[X] ISAN deve ser único
 [] Buscar um filme por ISAN ou nome
 [] Retornar um filme ou vazio
 
