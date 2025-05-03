@@ -17,7 +17,7 @@ if (process.env.NODE_ENV === 'test') {
   typeormServer = new DataSource({
     type: 'postgres',
     host: 'localhost',
-    database: 'localdora_test',
+    database: 'locadora_test',
     synchronize: true,
     dropSchema: true,
     port: 5432,
