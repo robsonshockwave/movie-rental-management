@@ -1,3 +1,8 @@
+## Comandos
+
+- Para criar uma migration usar o comando `npm run migration:generate -- -n NomeDaMigration`
+- Para rodar as migations usar o comando `npm run migration:run`
+
 ## Locadora
 
 - Cliente (client): [name, cpf, phone, email, address]

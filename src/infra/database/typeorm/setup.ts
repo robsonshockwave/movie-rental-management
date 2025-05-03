@@ -13,16 +13,27 @@ if (process.env.NODE_ENV === 'test') {
     dropSchema: true,
     entities: [ClientTypeorm, MovieTypeorm, HireTypeorm],
   });
-} else {
+} else if (process.env.NODE_ENV === 'integration') {
   typeormServer = new DataSource({
     type: 'postgres',
     host: 'localhost',
     database: 'locadora_test',
     synchronize: true,
+    port: 5433,
+    username: 'postgres',
+    password: 'postgres',
+    entities: [ClientTypeorm, MovieTypeorm, HireTypeorm],
+  });
+} else {
+  typeormServer = new DataSource({
+    type: 'postgres',
+    host: 'localhost',
+    database: 'locadora_prod',
     port: 5432,
     username: 'postgres',
     password: 'postgres',
     entities: [ClientTypeorm, MovieTypeorm, HireTypeorm],
+    migrations: ['src/infra/database/typeorm/migrations/*.js'],
   });
 }
 
