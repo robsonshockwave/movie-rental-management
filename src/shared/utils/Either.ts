@@ -53,4 +53,7 @@ export class Either<L, R> {
   };
 }
 
-export type EitherType<T = null> = Either<Error | { message: string }, T>;
+export type EitherType<T = null> = Either<
+  Error | { message: string } | null,
+  T
+>;
