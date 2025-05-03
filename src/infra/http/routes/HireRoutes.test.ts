@@ -63,4 +63,73 @@ describe('HireRoutes', () => {
       delivery_date: ['delivery_date is required'],
     });
   });
+
+  test('should return an error with invalid dates', async () => {
+    const { statusCode, body } = await request(app).post('/hires').send({
+      movie_id: 'any_id',
+      client_id: 'any_id',
+      requested_date: 'invalid_date',
+      delivery_date: 'invalid_date',
+    });
+
+    expect(statusCode).toBe(400);
+    expect(body.message).toBe('Erro de validação');
+    expect(body.errors).toEqual({
+      requested_date: ['requested_date must be a valid date'],
+      delivery_date: ['delivery_date must be a valid date'],
+    });
+  });
+
+  test('should return a pendings hires', async () => {
+    const clientDTO = {
+      name: 'any_name',
+      cpf: '123.123.123-12',
+      phone: '33333333',
+      email: 'any_email@email.com',
+      address: 'any_address',
+    };
+
+    const movieDTO = {
+      name: 'any_name',
+      author: 'any_author',
+      genre: 'any_genre',
+      ISAN: '1234567890123456',
+      quantity: 1,
+    };
+
+    const client = await typeormServer
+      .getRepository(ClientTypeorm)
+      .save(clientDTO);
+    const movie = await typeormServer
+      .getRepository(MovieTypeorm)
+      .save(movieDTO);
+
+    await typeormServer.getRepository(HireTypeorm).save({
+      client: { id: client.id },
+      movie: { id: movie.id },
+      requested_date: new Date('2025-01-04').toISOString(),
+      delivery_date: new Date('2025-01-01').toISOString(),
+    });
+
+    const { statusCode, body } = await request(app).get('/hires');
+
+    expect(statusCode).toBe(200);
+    expect(body.length).toBe(1);
+    expect(body).toEqual([
+      expect.objectContaining({
+        id: expect.any(String),
+        return_date: null,
+        requested_date: new Date('2025-01-04').toISOString(),
+        delivery_date: new Date('2025-01-01').toISOString(),
+        client: {
+          name: clientDTO.name,
+          cpf: clientDTO.cpf,
+          email: clientDTO.email,
+        },
+        movie: {
+          name: movieDTO.name,
+        },
+      }),
+    ]);
+  });
 });
