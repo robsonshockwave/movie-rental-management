@@ -3,10 +3,7 @@ import { Movie } from '../../../domain/entities/Movie';
 import { AppError } from '../../../shared/errors/AppError';
 import { EitherType } from '../../../shared/utils/Either';
 import { httpResponse } from '../../../shared/utils/HttpResponse';
-
-interface IHttpRequest {
-  body: Movie;
-}
+import { IHttpRequestCreateMovie } from '../dtos/MovieHttpDTO';
 
 interface ICreateMovieUseCase {
   execute(movie: Movie): Promise<EitherType>;
@@ -41,7 +38,7 @@ const zodValidator = z.object({
 export class CreateMovieController {
   constructor(
     private createMovieUseCase: ICreateMovieUseCase,
-    private httpRequest: IHttpRequest
+    private httpRequest: IHttpRequestCreateMovie
   ) {}
 
   async handle() {
