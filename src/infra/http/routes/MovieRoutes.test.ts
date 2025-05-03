@@ -34,4 +34,56 @@ describe('MovieRoutes', () => {
       author: ['author is required'],
     });
   });
+
+  test('should be possible to find a movie by ISAN', async () => {
+    const movieDTO = {
+      name: 'any_name',
+      genre: 'any_genre',
+      quantity: 1,
+      ISAN: '1234567890123456',
+      author: 'any_author',
+    };
+
+    await typeormServer.getRepository(MovieTypeorm).save(movieDTO);
+
+    const { statusCode, body } = await request(app)
+      .get('/movies')
+      .query({ value: '1234567890123456' });
+
+    expect(body[0].id).toBeDefined();
+    expect(statusCode).toBe(200);
+    expect(body[0]).toEqual(expect.objectContaining(movieDTO));
+  });
+
+  test('should be possible to find a movie by name', async () => {
+    const movieDTO = {
+      name: 'any_name',
+      genre: 'any_genre',
+      quantity: 1,
+      ISAN: '1234567890123456',
+      author: 'any_author',
+    };
+
+    await typeormServer.getRepository(MovieTypeorm).save(movieDTO);
+
+    const { statusCode, body } = await request(app)
+      .get('/movies')
+      .query({ value: 'any_name' });
+
+    expect(body[0].id).toBeDefined();
+    expect(statusCode).toBe(200);
+    expect(body[0]).toEqual(expect.objectContaining(movieDTO));
+  });
+
+  test('should check if the value was passed correctly to query', async () => {
+    const { statusCode, body } = await request(app)
+      .get('/movies')
+      .query({ value: '' });
+
+    expect(statusCode).toBe(400);
+    expect(body.message).toBe('Erro de validação');
+    expect(body.errors).toEqual({
+      value: ['value must be at least 1 characters long'],
+    });
+  });
 });

@@ -3,12 +3,7 @@ import { IMovie } from '../../../domain/entities/Movie';
 import { AppError } from '../../../shared/errors/AppError';
 import { EitherType } from '../../../shared/utils/Either';
 import { httpResponse } from '../../../shared/utils/HttpResponse';
-
-interface IHttpRequest {
-  query: {
-    value: string;
-  };
-}
+import { IHttpRequestGetMovieByISANorName } from '../dtos/MovieHttpDTO';
 
 interface IGetMovieByISANorNameUseCase {
   execute({ value }: { value: string }): Promise<EitherType<IMovie[]>>;
@@ -25,7 +20,7 @@ const zodValidator = z.object({
 export class GetMovieByISANorNameController {
   constructor(
     private getMovieByISANorNameUseCase: IGetMovieByISANorNameUseCase,
-    private httpRequest: IHttpRequest
+    private httpRequest: IHttpRequestGetMovieByISANorName
   ) {}
 
   async handle() {
