@@ -6,7 +6,7 @@ import { httpResponse } from '../../../shared/utils/HttpResponse';
 import { IHttpRequestCreateHire } from '../dtos/HireHttpDTO';
 
 interface ICreateHireUseCase {
-  execute(hire: Hire): Promise<EitherType>;
+  execute(data: Hire): Promise<EitherType>;
 }
 
 const zodValidator = z.object({

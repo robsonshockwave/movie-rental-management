@@ -23,15 +23,13 @@ describe('CreateHireUseCase', () => {
   const hireRequestDTO = {
     client_id: 'any_client_id',
     movie_id: 'any_movie_id',
-    requested_date: new Date('2025-01-01'),
-    delivery_date: new Date('2025-01-02'),
+    requested_date: new Date('2025-01-01').toISOString(),
+    delivery_date: new Date('2025-01-02').toISOString(),
     return_date: null,
   };
 
   const hireResponseDTO = {
     ...hireRequestDTO,
-    requested_date: hireRequestDTO.requested_date.toISOString(),
-    delivery_date: hireRequestDTO.delivery_date.toISOString(),
     id: 'any_id',
     client: {
       address: 'any_address',
@@ -87,8 +85,8 @@ describe('CreateHireUseCase', () => {
     expect(hireRepository.create).toHaveBeenCalledWith({
       client_id: hireRequestDTO.client_id,
       movie_id: hireRequestDTO.movie_id,
-      requested_date: hireRequestDTO.requested_date.toISOString(),
-      delivery_date: hireRequestDTO.delivery_date.toISOString(),
+      requested_date: hireRequestDTO.requested_date,
+      delivery_date: hireRequestDTO.delivery_date,
       return_date: hireRequestDTO.return_date,
     });
   });
@@ -114,7 +112,7 @@ describe('CreateHireUseCase', () => {
 
     const output = await sut.execute({
       ...hireRequestDTO,
-      delivery_date: new Date('2024-01-01'),
+      delivery_date: new Date('2024-01-01').toISOString(),
     });
 
     expect(output.getLeft()).toEqual(Either.dateForReturnLessThanRequestDate);

@@ -2,9 +2,11 @@ import request from 'supertest';
 import { MovieTypeorm } from '../../database/typeorm/entities/Movie';
 import { typeormServer } from '../../database/typeorm/setup';
 import { app } from '../app';
+import { HireTypeorm } from '../../database/typeorm/entities/Hire';
 
 describe('MovieRoutes', () => {
   beforeEach(async () => {
+    await typeormServer.getRepository(HireTypeorm).query('DELETE FROM hires');
     await typeormServer.getRepository(MovieTypeorm).query('DELETE FROM movies');
   });
 

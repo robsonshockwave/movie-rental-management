@@ -10,6 +10,10 @@ export class CreateHireUseCase {
     private emailService: any
   ) {}
 
+  private isValidDate(date: any): boolean {
+    return date instanceof Date && !isNaN(date.getTime());
+  }
+
   async execute(data: CreateHireDTO) {
     if (!this.hireRepository || !this.emailService) {
       throw new AppError(AppError.dependencies);
@@ -24,7 +28,14 @@ export class CreateHireUseCase {
       throw new AppError(AppError.missingMandatoryParameters);
     }
 
-    if (data.requested_date.getTime() > data.delivery_date.getTime()) {
+    if (
+      !this.isValidDate(new Date(data.requested_date)) ||
+      !this.isValidDate(new Date(data.delivery_date))
+    ) {
+      throw new AppError(AppError.invalidDates);
+    }
+
+    if (new Date(data.requested_date) > new Date(data.delivery_date)) {
       return Either.left(Either.dateForReturnLessThanRequestDate);
     }
 
@@ -41,8 +52,8 @@ export class CreateHireUseCase {
     const hire = new Hire(
       data.client_id,
       data.movie_id,
-      data.requested_date.toISOString(),
-      data.delivery_date.toISOString()
+      data.requested_date,
+      data.delivery_date
     );
 
     const hireCreated = await this.hireRepository.create(hire);
