@@ -4,7 +4,7 @@ import { createClientCompose } from './composers/CreateClientCompose';
 const clientRoutes = Router();
 
 clientRoutes.post('/', async (req: Request, res: Response): Promise<void> => {
-  const httpRequest = req.body;
+  const httpRequest = { body: req.body };
 
   const { statusCode, body } = await createClientCompose(httpRequest);
 

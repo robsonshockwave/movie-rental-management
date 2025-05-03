@@ -46,12 +46,9 @@ const zodValidator = z.object({
 });
 
 export class CreateClientController {
-  private clientClientUseCase;
-  private httpRequest;
-
   constructor(
-    clientClientUseCase: IClientClientUseCase,
-    httpRequest: IHttpRequest
+    private clientClientUseCase: IClientClientUseCase,
+    private httpRequest: IHttpRequest
   ) {
     this.clientClientUseCase = clientClientUseCase;
     this.httpRequest = httpRequest;

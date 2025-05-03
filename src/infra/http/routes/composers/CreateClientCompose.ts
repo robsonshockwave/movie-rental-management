@@ -3,13 +3,16 @@ import { ClientRepository } from '../../../database/typeorm/repositories/ClientR
 import { CreateClientUseCase } from '../../../../use-cases/CreateClientUseCase';
 import { CreateClientController } from '../../controllers/CreateClientController';
 
-export const createClientCompose = async (httpRequest: Request) => {
-  const clientRepositoryFn = new ClientRepository();
-  const createClientUseCaseFn = new CreateClientUseCase(clientRepositoryFn);
-  const controller = new CreateClientController(
-    createClientUseCaseFn,
+export const createClientCompose = async (httpRequest: {
+  body: Request['body'];
+}) => {
+  const clientRepository = new ClientRepository();
+  const createClientUseCase = new CreateClientUseCase(clientRepository);
+
+  const createClientController = new CreateClientController(
+    createClientUseCase,
     httpRequest
   );
 
-  return controller.handle();
+  return await createClientController.handle();
 };
