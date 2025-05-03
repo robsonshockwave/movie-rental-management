@@ -14,23 +14,23 @@ describe('HireRoutes', () => {
       .query('DELETE FROM clients');
   });
 
+  const clientDTO = {
+    name: 'any_name',
+    cpf: '123.123.123-12',
+    phone: '33333333',
+    email: 'any_email@email.com',
+    address: 'any_address',
+  };
+
+  const movieDTO = {
+    name: 'any_name',
+    author: 'any_author',
+    genre: 'any_genre',
+    ISAN: '1234567890123456',
+    quantity: 1,
+  };
+
   test('should be possible to register a hire', async () => {
-    const clientDTO = {
-      name: 'any_name',
-      cpf: '123.123.123-12',
-      phone: '33333333',
-      email: 'any_email@email.com',
-      address: 'any_address',
-    };
-
-    const movieDTO = {
-      name: 'any_name',
-      author: 'any_author',
-      genre: 'any_genre',
-      ISAN: '1234567890123456',
-      quantity: 1,
-    };
-
     const client = await typeormServer
       .getRepository(ClientTypeorm)
       .save(clientDTO);
@@ -81,22 +81,6 @@ describe('HireRoutes', () => {
   });
 
   test('should return a pendings hires', async () => {
-    const clientDTO = {
-      name: 'any_name',
-      cpf: '123.123.123-12',
-      phone: '33333333',
-      email: 'any_email@email.com',
-      address: 'any_address',
-    };
-
-    const movieDTO = {
-      name: 'any_name',
-      author: 'any_author',
-      genre: 'any_genre',
-      ISAN: '1234567890123456',
-      quantity: 1,
-    };
-
     const client = await typeormServer
       .getRepository(ClientTypeorm)
       .save(clientDTO);
@@ -131,5 +115,55 @@ describe('HireRoutes', () => {
         },
       }),
     ]);
+  });
+
+  test('should be possible to return a hire and fine is R$ 0,00', async () => {
+    const client = await typeormServer
+      .getRepository(ClientTypeorm)
+      .save(clientDTO);
+    const movie = await typeormServer
+      .getRepository(MovieTypeorm)
+      .save(movieDTO);
+
+    const hire = await typeormServer.getRepository(HireTypeorm).save({
+      client: { id: client.id },
+      movie: { id: movie.id },
+      requested_date: new Date('2025-01-01').toISOString(),
+      delivery_date: new Date('2025-01-04').toISOString(),
+    });
+
+    const { statusCode, body } = await request(app)
+      .put(`/hires/return/${hire.id}`)
+      .send({
+        return_date: new Date('2025-01-03').toISOString(),
+      });
+
+    expect(statusCode).toBe(200);
+    expect(body).toBe('Multa por atraso: R$ 0,00');
+  });
+
+  test('should be possible to return a hire and fine is R$ 10,00', async () => {
+    const client = await typeormServer
+      .getRepository(ClientTypeorm)
+      .save(clientDTO);
+    const movie = await typeormServer
+      .getRepository(MovieTypeorm)
+      .save(movieDTO);
+
+    const hire = await typeormServer.getRepository(HireTypeorm).save({
+      client: { id: client.id },
+      movie: { id: movie.id },
+      requested_date: new Date('2025-01-01').toISOString(),
+      delivery_date: new Date('2025-01-04').toISOString(),
+    });
+
+    const { statusCode, body } = await request(app)
+      .put(`/hires/return/${hire.id}`)
+      .send({
+        return_date: new Date('2025-01-06').toISOString(),
+      });
+
+    expect(statusCode).toBe(200);
+    expect(body).toBe('Multa por atraso: R$ 10,00');
   });
 });

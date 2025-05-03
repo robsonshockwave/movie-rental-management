@@ -48,7 +48,7 @@ describe('ReturnMovieUseCase', () => {
 
     const output = await sut.execute({
       hire_id: 'any_id',
-      return_date: new Date('2025-01-01'),
+      return_date: new Date('2025-01-01').toISOString(),
     });
 
     expect(output.getRight()).toEqual('Multa por atraso: R$ 0,00');
@@ -66,7 +66,7 @@ describe('ReturnMovieUseCase', () => {
 
     const output = await sut.execute({
       hire_id: 'any_id',
-      return_date: new Date('2025-01-03'),
+      return_date: new Date('2025-01-03').toISOString(),
     });
 
     expect(output.getRight()).toEqual('Multa por atraso: R$ 10,00');
@@ -81,7 +81,10 @@ describe('ReturnMovieUseCase', () => {
     const sut = new ReturnMovieUseCase(undefined as any);
 
     await expect(
-      sut.execute({ hire_id: 'any_id', return_date: new Date('2025-01-01') })
+      sut.execute({
+        hire_id: 'any_id',
+        return_date: new Date('2025-01-01').toISOString(),
+      })
     ).rejects.toThrow(new AppError(AppError.dependencies));
   });
 

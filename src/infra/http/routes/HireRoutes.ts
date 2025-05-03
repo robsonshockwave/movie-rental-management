@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { createHireCompose } from './composers/CreateHireCompose';
 import { IHttpRequestCreateHire } from '../dtos/HireHttpDTO';
 import { getPendingHiresCompose } from './composers/GetPendingHiresCompose';
+import { returnMovieCompose } from './composers/ReturnMovieCompose';
 
 const hireRoutes = Router();
 
@@ -17,6 +18,14 @@ hireRoutes.post('/', async (req, res) => {
 
 hireRoutes.get('/', async (req, res) => {
   const { statusCode, body } = await getPendingHiresCompose();
+
+  res.status(statusCode).json(body);
+});
+
+hireRoutes.put('/return/:hire_id', async (req, res) => {
+  const httpRequest = { params: req.params, body: req.body };
+
+  const { statusCode, body } = await returnMovieCompose(httpRequest);
 
   res.status(statusCode).json(body);
 });
