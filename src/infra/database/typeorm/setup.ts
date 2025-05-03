@@ -5,12 +5,26 @@ import { HireTypeorm } from './entities/Hire';
 
 let typeormServer: DataSource;
 
-typeormServer = new DataSource({
-  type: 'sqlite',
-  database: 'db.sqlite',
-  synchronize: true,
-  dropSchema: true,
-  entities: [ClientTypeorm, MovieTypeorm, HireTypeorm],
-});
+if (process.env.NODE_ENV === 'test') {
+  typeormServer = new DataSource({
+    type: 'sqlite',
+    database: 'db.sqlite',
+    synchronize: true,
+    dropSchema: true,
+    entities: [ClientTypeorm, MovieTypeorm, HireTypeorm],
+  });
+} else {
+  typeormServer = new DataSource({
+    type: 'postgres',
+    host: 'localhost',
+    database: 'localdora_test',
+    synchronize: true,
+    dropSchema: true,
+    port: 5432,
+    username: 'postgres',
+    password: 'postgres',
+    entities: [ClientTypeorm, MovieTypeorm, HireTypeorm],
+  });
+}
 
 export { typeormServer };

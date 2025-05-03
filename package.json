@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "NODE_ENV=test jest --runInBand",
+    "test:integration": "NODE_ENV=integration jest --config=jest.integration.js --runInBand",
     "dev": "ts-node-dev --transpile-only --ignore-watch node_modules src/infra/http/server.ts"
   },
   "keywords": [],
@@ -21,8 +22,10 @@
     "typescript": "^5.8.3"
   },
   "dependencies": {
-    "express": "^5.1.0",
+    "express": "^4.21.2",
+    "express-async-errors": "^3.1.1",
     "reflect-metadata": "^0.2.2",
+    "supertest": "^7.1.0",
     "typeorm": "^0.3.22",
     "zod": "^3.24.3"
   }

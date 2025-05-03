@@ -1,3 +1,4 @@
+import 'express-async-errors';
 import express, { NextFunction, Request, Response } from 'express';
 import { routes } from './routes';
 import { ZodError } from 'zod';
