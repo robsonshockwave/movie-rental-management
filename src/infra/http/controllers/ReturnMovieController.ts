@@ -5,8 +5,10 @@ import { httpResponse } from '../../../shared/utils/HttpResponse';
 
 interface IHttpRequest {
   body: {
-    hire_id: string;
     return_date: string;
+  };
+  params: {
+    hire_id: string;
   };
 }
 
@@ -17,12 +19,7 @@ interface IReturnMovieUseCase {
   }): Promise<EitherType<string>>;
 }
 
-const zodValidator = z.object({
-  hire_id: z
-    .string({
-      required_error: 'hire_id is required',
-    })
-    .min(1, { message: 'hire_id must be at least 1 characters long' }),
+const zodValidatorBody = z.object({
   return_date: z
     .string({
       required_error: 'return_date is required',
@@ -38,6 +35,14 @@ const zodValidator = z.object({
     ),
 });
 
+const zodValidatorParams = z.object({
+  hire_id: z
+    .string({
+      required_error: 'hire_id is required',
+    })
+    .min(1, { message: 'hire_id must be at least 1 characters long' }),
+});
+
 export class ReturnMovieController {
   constructor(
     private returnMovieUseCase: IReturnMovieUseCase,
@@ -45,11 +50,16 @@ export class ReturnMovieController {
   ) {}
 
   async handle() {
-    if (!this.returnMovieUseCase || !this.httpRequest?.body) {
+    if (
+      !this.returnMovieUseCase ||
+      !this.httpRequest?.body ||
+      !this.httpRequest?.params
+    ) {
       throw new AppError(AppError.dependencies);
     }
 
-    const { hire_id, return_date } = zodValidator.parse(this.httpRequest.body);
+    const { return_date } = zodValidatorBody.parse(this.httpRequest.body);
+    const { hire_id } = zodValidatorParams.parse(this.httpRequest.params);
 
     const output = await this.returnMovieUseCase.execute({
       hire_id,

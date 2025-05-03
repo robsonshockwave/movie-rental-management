@@ -18,8 +18,10 @@ describe('ReturnMovieController', () => {
 
     const httpRequest = {
       body: {
-        hire_id: 'any_hire_id',
         return_date: new Date('2025-01-04').toISOString(),
+      },
+      params: {
+        hire_id: 'any_hire_id',
       },
     };
 
@@ -29,7 +31,10 @@ describe('ReturnMovieController', () => {
 
     expect(response).toEqual(httpResponse(200, 'any_message'));
     expect(returnMovieUseCase.execute).toHaveBeenCalledTimes(1);
-    expect(returnMovieUseCase.execute).toHaveBeenCalledWith(httpRequest.body);
+    expect(returnMovieUseCase.execute).toHaveBeenCalledWith({
+      ...httpRequest.body,
+      ...httpRequest.params,
+    });
   });
 
   test('should return an httpResponse 400 and an error if the return fails', async () => {
@@ -39,8 +44,10 @@ describe('ReturnMovieController', () => {
 
     const httpRequest = {
       body: {
-        hire_id: 'any_hire_id',
         return_date: new Date('2025-01-04').toISOString(),
+      },
+      params: {
+        hire_id: 'any_hire_id',
       },
     };
 
@@ -50,7 +57,10 @@ describe('ReturnMovieController', () => {
 
     expect(response).toEqual(httpResponse(400, { message: 'any_error' }));
     expect(returnMovieUseCase.execute).toHaveBeenCalledTimes(1);
-    expect(returnMovieUseCase.execute).toHaveBeenCalledWith(httpRequest.body);
+    expect(returnMovieUseCase.execute).toHaveBeenCalledWith({
+      ...httpRequest.body,
+      ...httpRequest.params,
+    });
   });
 
   test('should return a throw AppError if returnMovieUseCase and httpRequest are not provided', async () => {
@@ -64,8 +74,10 @@ describe('ReturnMovieController', () => {
   test('should return an error from the zod validator if there is an error validating the data', async () => {
     const httpRequest = {
       body: {
-        hire_id: 'any_hire_id',
         return_date: '',
+      },
+      params: {
+        hire_id: 'any_hire_id',
       },
     };
 
