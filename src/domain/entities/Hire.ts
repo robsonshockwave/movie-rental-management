@@ -7,8 +7,10 @@ export class Hire {
     public movie_id: string,
     public requested_date: string,
     public delivery_date: string,
-    public return_date: string | null = null
-  ) {}
+    public return_date?: string | null
+  ) {
+    this.return_date ??= null;
+  }
 }
 
 export type IHire = Hire & {

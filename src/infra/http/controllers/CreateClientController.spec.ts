@@ -59,7 +59,7 @@ describe('CreateClientController', () => {
     expect(clientClientUseCase.execute).toHaveBeenCalledWith(httpRequest.body);
   });
 
-  it('should return a throw AppError if clientClientUseCase and httpRequest are not provided', async () => {
+  test('should return a throw AppError if clientClientUseCase and httpRequest are not provided', async () => {
     const sut = new CreateClientController(undefined as any, undefined as any);
 
     await expect(sut.handle()).rejects.toThrow(
@@ -67,7 +67,7 @@ describe('CreateClientController', () => {
     );
   });
 
-  it('should return an error from the zod validator if there is an error validating the data', async () => {
+  test('should return an error from the zod validator if there is an error validating the data', async () => {
     const httpRequest = {
       body: {
         name: 'any_name',
