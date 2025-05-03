@@ -3,10 +3,7 @@ import { Client } from '../../../domain/entities/Client';
 import { AppError } from '../../../shared/errors/AppError';
 import { EitherType } from '../../../shared/utils/Either';
 import { httpResponse } from '../../../shared/utils/HttpResponse';
-
-interface IHttpRequest {
-  body: Client;
-}
+import { IHttpRequestCreateClient } from '../dtos/ClientHttpDTO';
 
 interface IClientClientUseCase {
   execute(client: Client): Promise<EitherType>;
@@ -48,7 +45,7 @@ const zodValidator = z.object({
 export class CreateClientController {
   constructor(
     private clientClientUseCase: IClientClientUseCase,
-    private httpRequest: IHttpRequest
+    private httpRequest: IHttpRequestCreateClient
   ) {
     this.clientClientUseCase = clientClientUseCase;
     this.httpRequest = httpRequest;

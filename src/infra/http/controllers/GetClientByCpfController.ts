@@ -3,15 +3,10 @@ import { IClient } from '../../../domain/entities/Client';
 import { AppError } from '../../../shared/errors/AppError';
 import { EitherType } from '../../../shared/utils/Either';
 import { httpResponse } from '../../../shared/utils/HttpResponse';
+import { IHttpRequestGetClientByCpf } from '../dtos/ClientHttpDTO';
 
 interface IGetClientByCpfUseCase {
-  execute(cpf: string): Promise<EitherType<IClient>>;
-}
-
-interface IHttpRequest {
-  params: {
-    cpf: string;
-  };
+  execute(cpf: string): Promise<EitherType<IClient | null>>;
 }
 
 const zodValidator = z.object({
@@ -33,7 +28,7 @@ const zodValidator = z.object({
 export class GetClientByCpfController {
   constructor(
     private getClientByCpfUseCase: IGetClientByCpfUseCase,
-    private httpRequest: IHttpRequest
+    private httpRequest: IHttpRequestGetClientByCpf
   ) {}
 
   async handle() {

@@ -3,6 +3,6 @@ import { clientRoutes } from './ClientRoutes';
 
 const routes = Router();
 
-routes.use('/client', clientRoutes);
+routes.use('/clients', clientRoutes);
 
 export { routes };

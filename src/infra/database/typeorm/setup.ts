@@ -19,7 +19,6 @@ if (process.env.NODE_ENV === 'test') {
     host: 'localhost',
     database: 'locadora_test',
     synchronize: true,
-    dropSchema: true,
     port: 5432,
     username: 'postgres',
     password: 'postgres',
