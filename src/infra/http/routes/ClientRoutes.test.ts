@@ -23,6 +23,20 @@ describe('ClientRoutes', () => {
     expect(body).toBeNull();
   });
 
+  test('should return an error with missing required fields', async () => {
+    const { statusCode, body } = await request(app).post('/clients').send({});
+
+    expect(statusCode).toBe(400);
+    expect(body.message).toBe('Erro de validação');
+    expect(body.errors).toEqual({
+      name: ['name is required'],
+      address: ['address is required'],
+      cpf: ['cpf is required'],
+      email: ['email is required'],
+      phone: ['phone is required'],
+    });
+  });
+
   test('should be possible to find a client by cpf', async () => {
     const clientDTO = {
       name: 'any_name',
@@ -41,5 +55,15 @@ describe('ClientRoutes', () => {
     expect(body.id).toBeDefined();
     expect(statusCode).toBe(200);
     expect(body).toEqual(expect.objectContaining(clientDTO));
+  });
+
+  test('should check if the cpf was passed correctly to params', async () => {
+    const { statusCode, body } = await request(app).get('/clients/cpf/1');
+
+    expect(statusCode).toBe(400);
+    expect(body.message).toBe('Erro de validação');
+    expect(body.errors).toEqual({
+      cpf: ['invalid cpf'],
+    });
   });
 });

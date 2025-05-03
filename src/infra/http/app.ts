@@ -11,9 +11,11 @@ app.use(routes);
 
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   if (err instanceof ZodError) {
+    console.log(err.flatten().fieldErrors);
+
     res.status(400).json({
       message: 'Erro de validação',
-      errors: err,
+      errors: err.flatten().fieldErrors,
     });
     return;
   }
