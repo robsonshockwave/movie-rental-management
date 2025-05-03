@@ -2,15 +2,7 @@ import { z } from 'zod';
 import { AppError } from '../../../shared/errors/AppError';
 import { EitherType } from '../../../shared/utils/Either';
 import { httpResponse } from '../../../shared/utils/HttpResponse';
-
-interface IHttpRequest {
-  body: {
-    return_date: string;
-  };
-  params: {
-    hire_id: string;
-  };
-}
+import { IHttpRequestReturnMovie } from '../dtos/HireHttpDTO';
 
 interface IReturnMovieUseCase {
   execute(data: {
@@ -46,7 +38,7 @@ const zodValidatorParams = z.object({
 export class ReturnMovieController {
   constructor(
     private returnMovieUseCase: IReturnMovieUseCase,
-    private httpRequest: IHttpRequest
+    private httpRequest: IHttpRequestReturnMovie
   ) {}
 
   async handle() {

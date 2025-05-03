@@ -3,10 +3,7 @@ import { Hire } from '../../../domain/entities/Hire';
 import { AppError } from '../../../shared/errors/AppError';
 import { EitherType } from '../../../shared/utils/Either';
 import { httpResponse } from '../../../shared/utils/HttpResponse';
-
-interface IHttpRequest {
-  body: Hire;
-}
+import { IHttpRequestCreateHire } from '../dtos/HireHttpDTO';
 
 interface ICreateHireUseCase {
   execute(hire: Hire): Promise<EitherType>;
@@ -54,7 +51,7 @@ const zodValidator = z.object({
 export class CreateHireController {
   constructor(
     private createHireUseCase: ICreateHireUseCase,
-    private httpRequest: IHttpRequest
+    private httpRequest: IHttpRequestCreateHire
   ) {}
 
   async handle() {
