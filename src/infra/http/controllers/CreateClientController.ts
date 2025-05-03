@@ -13,12 +13,16 @@ interface IClientClientUseCase {
 }
 
 const zodValidator = z.object({
-  name: z.string({
-    required_error: 'name is required',
-  }),
-  address: z.string({
-    required_error: 'address is required',
-  }),
+  name: z
+    .string({
+      required_error: 'name is required',
+    })
+    .min(3, { message: 'name must be at least 3 characters long' }),
+  address: z
+    .string({
+      required_error: 'address is required',
+    })
+    .min(3, { message: 'name must be at least 3 characters long' }),
   cpf: z
     .string({
       required_error: 'cpf is required',
@@ -34,9 +38,11 @@ const zodValidator = z.object({
     .email({
       message: 'invalid email',
     }),
-  phone: z.string({
-    required_error: 'phone is required',
-  }),
+  phone: z
+    .string({
+      required_error: 'phone is required',
+    })
+    .min(8, { message: 'name must be at least 8 characters long' }),
 });
 
 export class CreateClientController {
