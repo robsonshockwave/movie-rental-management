@@ -23,6 +23,23 @@ export class Either<L, R> {
     return this.rightValue;
   }
 
+  fold(
+    onLeft: (left: L | null) => {
+      statusCode: number;
+      body: L | null;
+    },
+    onRight: (right: R | null) => {
+      statusCode: number;
+      body: R | null;
+    }
+  ) {
+    if (this.leftValue !== null) {
+      return onLeft(this.leftValue);
+    }
+
+    return onRight(this.rightValue);
+  }
+
   static valueAlreadyRegistered(value: string) {
     return { message: `${value} já cadastrado.` };
   }
@@ -35,3 +52,5 @@ export class Either<L, R> {
     message: 'Filme ja alugado pelo cliente',
   };
 }
+
+export type EitherType<T = null> = Either<Error | { message: string }, T>;
