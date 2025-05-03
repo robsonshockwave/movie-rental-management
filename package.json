@@ -4,12 +4,14 @@
   "description": "- Cliente (client): [name, cpf, phone, email, address] - Filme (movie): [name, quantity, genre, ISAN, author] - Aluguel (hire): [client_id, movie_id, requested_date, delivery_date, return_date]",
   "main": "index.js",
   "scripts": {
-    "test": "NODE_ENV=test jest --runInBand"
+    "test": "NODE_ENV=test jest --runInBand",
+    "dev": "ts-node-dev --transpile-only --ignore-watch node_modules src/infra/http/server.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/express": "^5.0.1",
     "@types/jest": "^29.5.14",
     "@types/node": "^22.15.3",
     "jest": "^29.7.0",
@@ -19,6 +21,7 @@
     "typescript": "^5.8.3"
   },
   "dependencies": {
+    "express": "^5.1.0",
     "reflect-metadata": "^0.2.2",
     "typeorm": "^0.3.22",
     "zod": "^3.24.3"
