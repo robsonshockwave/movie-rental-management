@@ -14,10 +14,11 @@ export const authenticate = (
   const authHeader = req.headers.authorization;
 
   if (!authHeader) {
-    return res.status(401).json({ error: 'Token ausente' });
+    res.status(401).json({ error: 'Token ausente' });
+    return;
   }
 
-  // Bearer ahsdgaywdbawjdsajdjasjdjndsa
+  // Bearer ashjiahjkshasdjklndwjkn
   const [, token] = authHeader.split(' ');
 
   try {
@@ -30,6 +31,6 @@ export const authenticate = (
 
     next();
   } catch {
-    return res.status(401).json({ error: 'Token inválido ou expirado' });
+    res.status(401).json({ error: 'Token inválido ou expirado' });
   }
 };

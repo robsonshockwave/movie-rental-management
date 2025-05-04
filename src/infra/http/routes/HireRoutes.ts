@@ -6,8 +6,11 @@ import {
 } from '../dtos/HireHttpDTO';
 import { getPendingHiresCompose } from './composers/GetPendingHiresCompose';
 import { returnMovieCompose } from './composers/ReturnMovieCompose';
+import { authenticate } from '../middlewares/authenticate';
 
 const hireRoutes = Router();
+
+hireRoutes.use(authenticate);
 
 hireRoutes.post('/', async (req, res) => {
   const httpRequest = { body: req.body };

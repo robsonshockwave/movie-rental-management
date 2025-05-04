@@ -5,10 +5,11 @@ import {
   IHttpRequestCreateClient,
   IHttpRequestGetClientByCpf,
 } from '../dtos/ClientHttpDTO';
+import { authenticate } from '../middlewares/authenticate';
 
 const clientRoutes = Router();
 
-clientRoutes.post('/', async (req: Request, res: Response) => {
+clientRoutes.post('/', authenticate, async (req: Request, res: Response) => {
   const httpRequest = { body: req.body };
 
   const { statusCode, body } = await createClientCompose(
@@ -18,14 +19,18 @@ clientRoutes.post('/', async (req: Request, res: Response) => {
   res.status(statusCode).json(body);
 });
 
-clientRoutes.get('/cpf/:cpf', async (req: Request, res: Response) => {
-  const httpRequest = { params: req.params };
+clientRoutes.get(
+  '/cpf/:cpf',
+  authenticate,
+  async (req: Request, res: Response) => {
+    const httpRequest = { params: req.params };
 
-  const { statusCode, body } = await getClientByCpfCompose(
-    httpRequest as IHttpRequestGetClientByCpf
-  );
+    const { statusCode, body } = await getClientByCpfCompose(
+      httpRequest as IHttpRequestGetClientByCpf
+    );
 
-  res.status(statusCode).json(body);
-});
+    res.status(statusCode).json(body);
+  }
+);
 
 export { clientRoutes };
