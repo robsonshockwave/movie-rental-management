@@ -2,7 +2,7 @@ import { Like, Repository } from 'typeorm';
 import { IMovieRepository } from '../../../../domain/repositories/IMovieRepository';
 import { MovieTypeorm } from '../entities/Movie';
 import typeormServer from '../setup';
-import { IMovie, Movie } from '../../../../domain/entities/Movie';
+import { Movie } from '../../../../domain/entities/Movie';
 
 export class MovieRepository implements IMovieRepository {
   private ormRepository: Repository<MovieTypeorm>;

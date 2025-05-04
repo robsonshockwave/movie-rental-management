@@ -51,6 +51,10 @@ export class Either<L, R> {
   static movieAlreadyHiredByClient = {
     message: 'Filme ja alugado pelo cliente',
   };
+
+  static emailOrPasswordInvalid = {
+    message: 'Email ou senha inválidos',
+  };
 }
 
 export type EitherType<T = null> = Either<
