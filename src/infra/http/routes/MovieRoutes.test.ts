@@ -3,28 +3,44 @@ import { MovieTypeorm } from '../../database/typeorm/entities/Movie';
 import typeormServer from '../../database/typeorm/setup';
 import { app } from '../app';
 import { HireTypeorm } from '../../database/typeorm/entities/Hire';
+import { createUserAndReturnToken } from '../../../shared/utils/tests/authenticate';
+import { UserTypeorm } from '../../database/typeorm/entities/User';
 
 describe('MovieRoutes', () => {
   beforeEach(async () => {
     await typeormServer.getRepository(HireTypeorm).query('DELETE FROM hires');
     await typeormServer.getRepository(MovieTypeorm).query('DELETE FROM movies');
+    await typeormServer.getRepository(MovieTypeorm).query('DELETE FROM movies');
+  });
+
+  let token: string;
+
+  beforeAll(async () => {
+    await typeormServer.getRepository(UserTypeorm).query('DELETE FROM users');
+    token = await createUserAndReturnToken();
   });
 
   test('should be possible to register a movie', async () => {
-    const { statusCode, body } = await request(app).post('/movies').send({
-      name: 'any_name',
-      genre: 'any_genre',
-      quantity: 1,
-      ISAN: '1234567890123456',
-      author: 'any_author',
-    });
+    const { statusCode, body } = await request(app)
+      .post('/movies')
+      .send({
+        name: 'any_name',
+        genre: 'any_genre',
+        quantity: 1,
+        ISAN: '1234567890123456',
+        author: 'any_author',
+      })
+      .set('Authorization', `Bearer ${token}`);
 
     expect(statusCode).toBe(201);
     expect(body).toBeNull();
   });
 
   test('should return an error with missing required fields', async () => {
-    const { statusCode, body } = await request(app).post('/movies').send({});
+    const { statusCode, body } = await request(app)
+      .post('/movies')
+      .send({})
+      .set('Authorization', `Bearer ${token}`);
 
     expect(statusCode).toBe(400);
     expect(body.message).toBe('Erro de validação');
@@ -50,7 +66,8 @@ describe('MovieRoutes', () => {
 
     const { statusCode, body } = await request(app)
       .get('/movies')
-      .query({ value: '1234567890123456' });
+      .query({ value: '1234567890123456' })
+      .set('Authorization', `Bearer ${token}`);
 
     expect(body[0].id).toBeDefined();
     expect(statusCode).toBe(200);
@@ -70,7 +87,8 @@ describe('MovieRoutes', () => {
 
     const { statusCode, body } = await request(app)
       .get('/movies')
-      .query({ value: 'any_name' });
+      .query({ value: 'any_name' })
+      .set('Authorization', `Bearer ${token}`);
 
     expect(body[0].id).toBeDefined();
     expect(statusCode).toBe(200);
@@ -80,7 +98,8 @@ describe('MovieRoutes', () => {
   test('should check if the value was passed correctly to query', async () => {
     const { statusCode, body } = await request(app)
       .get('/movies')
-      .query({ value: '' });
+      .query({ value: '' })
+      .set('Authorization', `Bearer ${token}`);
 
     expect(statusCode).toBe(400);
     expect(body.message).toBe('Erro de validação');

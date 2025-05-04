@@ -4,6 +4,8 @@ import { MovieTypeorm } from '../../database/typeorm/entities/Movie';
 import typeormServer from '../../database/typeorm/setup';
 import request from 'supertest';
 import { app } from '../app';
+import { UserTypeorm } from '../../database/typeorm/entities/User';
+import { createUserAndReturnToken } from '../../../shared/utils/tests/authenticate';
 
 describe('HireRoutes', () => {
   beforeEach(async () => {
@@ -12,6 +14,13 @@ describe('HireRoutes', () => {
     await typeormServer
       .getRepository(ClientTypeorm)
       .query('DELETE FROM clients');
+  });
+
+  let token: string;
+
+  beforeAll(async () => {
+    await typeormServer.getRepository(UserTypeorm).query('DELETE FROM users');
+    token = await createUserAndReturnToken();
   });
 
   const clientDTO = {
@@ -45,14 +54,18 @@ describe('HireRoutes', () => {
         client_id: client.id,
         requested_date: new Date('2025-01-01').toISOString(),
         delivery_date: new Date('2025-01-04').toISOString(),
-      });
+      })
+      .set('Authorization', `Bearer ${token}`);
 
     expect(statusCode).toBe(201);
     expect(body).toBeNull();
   }, 15000);
 
   test('should return an error with missing required fields', async () => {
-    const { statusCode, body } = await request(app).post('/hires').send({});
+    const { statusCode, body } = await request(app)
+      .post('/hires')
+      .send({})
+      .set('Authorization', `Bearer ${token}`);
 
     expect(statusCode).toBe(400);
     expect(body.message).toBe('Erro de validação');
@@ -65,12 +78,15 @@ describe('HireRoutes', () => {
   });
 
   test('should return an error with invalid dates', async () => {
-    const { statusCode, body } = await request(app).post('/hires').send({
-      movie_id: 'any_id',
-      client_id: 'any_id',
-      requested_date: 'invalid_date',
-      delivery_date: 'invalid_date',
-    });
+    const { statusCode, body } = await request(app)
+      .post('/hires')
+      .send({
+        movie_id: 'any_id',
+        client_id: 'any_id',
+        requested_date: 'invalid_date',
+        delivery_date: 'invalid_date',
+      })
+      .set('Authorization', `Bearer ${token}`);
 
     expect(statusCode).toBe(400);
     expect(body.message).toBe('Erro de validação');
@@ -95,7 +111,9 @@ describe('HireRoutes', () => {
       delivery_date: new Date('2025-01-01').toISOString(),
     });
 
-    const { statusCode, body } = await request(app).get('/hires');
+    const { statusCode, body } = await request(app)
+      .get('/hires')
+      .set('Authorization', `Bearer ${token}`);
 
     expect(statusCode).toBe(200);
     expect(body.length).toBe(1);
@@ -136,7 +154,8 @@ describe('HireRoutes', () => {
       .put(`/hires/return/${hire.id}`)
       .send({
         return_date: new Date('2025-01-03').toISOString(),
-      });
+      })
+      .set('Authorization', `Bearer ${token}`);
 
     expect(statusCode).toBe(200);
     expect(body).toBe('Multa por atraso: R$ 0,00');
@@ -161,7 +180,8 @@ describe('HireRoutes', () => {
       .put(`/hires/return/${hire.id}`)
       .send({
         return_date: new Date('2025-01-06').toISOString(),
-      });
+      })
+      .set('Authorization', `Bearer ${token}`);
 
     expect(statusCode).toBe(200);
     expect(body).toBe('Multa por atraso: R$ 10,00');
