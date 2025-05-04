@@ -37,7 +37,7 @@ export class LoginUseCase {
     }
 
     const token = this.jwtTokenService.generate(
-      { sub: user.id },
+      { id: user.id },
       process.env.JWT_SECRET!
     );
 

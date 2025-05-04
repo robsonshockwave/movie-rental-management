@@ -40,7 +40,7 @@ export class CreateUserUseCase {
     const createdUser = await this.userRepository.create(user);
 
     const token = this.jwtTokenService.generate(
-      { sub: createdUser.id },
+      { id: createdUser.id },
       process.env.JWT_SECRET!
     );
 
