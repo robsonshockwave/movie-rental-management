@@ -1,7 +1,7 @@
 import { IsNull, Repository } from 'typeorm';
 import { IHireRepository } from '../../../../domain/repositories/IHireRepository';
 import { HireTypeorm } from '../entities/Hire';
-import { typeormServer } from '../setup';
+import typeormServer from '../setup';
 import { Hire } from '../../../../domain/entities/Hire';
 
 export class HireRepository implements IHireRepository {

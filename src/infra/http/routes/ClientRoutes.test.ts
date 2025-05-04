@@ -1,6 +1,6 @@
 import request from 'supertest';
 import { app } from '../app';
-import { typeormServer } from '../../database/typeorm/setup';
+import typeormServer from '../../database/typeorm/setup';
 import { ClientTypeorm } from '../../database/typeorm/entities/Client';
 import { HireTypeorm } from '../../database/typeorm/entities/Hire';
 

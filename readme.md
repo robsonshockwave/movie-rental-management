@@ -1,6 +1,6 @@
 ## Comandos
 
-- Para criar uma migration usar o comando `npm run migration:generate -- -n NomeDaMigration`
+- Para criar uma migration usar o comando `npm run migration:generate src/infra/database/typeorm/migrations/NomeDaMigration`
 - Para rodar as migations usar o comando `npm run migration:run`
 
 ## Locadora

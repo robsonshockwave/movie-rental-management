@@ -1,5 +1,5 @@
 import { ClientTypeorm } from '../entities/Client';
-import { typeormServer } from '../setup';
+import typeormServer from '../setup';
 import { ClientRepository } from './ClientRepository';
 
 describe('ClientRepository', () => {

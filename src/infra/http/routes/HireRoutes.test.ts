@@ -1,7 +1,7 @@
 import { ClientTypeorm } from '../../database/typeorm/entities/Client';
 import { HireTypeorm } from '../../database/typeorm/entities/Hire';
 import { MovieTypeorm } from '../../database/typeorm/entities/Movie';
-import { typeormServer } from '../../database/typeorm/setup';
+import typeormServer from '../../database/typeorm/setup';
 import request from 'supertest';
 import { app } from '../app';
 

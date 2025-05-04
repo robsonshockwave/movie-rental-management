@@ -34,8 +34,8 @@ if (process.env.NODE_ENV === 'test') {
     username: process.env.POSTGRES_USER_PROD,
     password: process.env.POSTGRES_PASS_PROD,
     entities: [ClientTypeorm, MovieTypeorm, HireTypeorm],
-    migrations: ['src/infra/database/typeorm/migrations/*.js'],
+    migrations: ['src/infra/database/typeorm/migrations/*.ts'],
   });
 }
 
-export { typeormServer };
+export default typeormServer;

@@ -1,5 +1,5 @@
 import { MovieTypeorm } from '../entities/Movie';
-import { typeormServer } from '../setup';
+import typeormServer from '../setup';
 import { MovieRepository } from './MovieRepository';
 
 describe('MovieRepository', () => {

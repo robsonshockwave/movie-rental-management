@@ -1,7 +1,7 @@
 import { ClientTypeorm } from '../entities/Client';
 import { HireTypeorm } from '../entities/Hire';
 import { MovieTypeorm } from '../entities/Movie';
-import { typeormServer } from '../setup';
+import typeormServer from '../setup';
 import { HireRepository } from './HireRepository';
 
 describe('HireRepository', () => {
