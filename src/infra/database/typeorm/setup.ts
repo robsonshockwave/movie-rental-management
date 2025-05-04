@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import { DataSource } from 'typeorm';
 import { ClientTypeorm } from './entities/Client';
 import { MovieTypeorm } from './entities/Movie';
@@ -16,22 +17,22 @@ if (process.env.NODE_ENV === 'test') {
 } else if (process.env.NODE_ENV === 'integration') {
   typeormServer = new DataSource({
     type: 'postgres',
-    host: 'localhost',
-    database: 'locadora_test',
     synchronize: true,
-    port: 5433,
-    username: 'postgres',
-    password: 'postgres',
+    host: process.env.POSTGRES_HOST_TEST,
+    database: process.env.POSTGRES_DATABASE_TEST,
+    port: Number(process.env.POSTGRES_PORT_TEST),
+    username: process.env.POSTGRES_USER_TEST,
+    password: process.env.POSTGRES_PASS_TEST,
     entities: [ClientTypeorm, MovieTypeorm, HireTypeorm],
   });
 } else {
   typeormServer = new DataSource({
     type: 'postgres',
-    host: 'localhost',
-    database: 'locadora_prod',
-    port: 5432,
-    username: 'postgres',
-    password: 'postgres',
+    host: process.env.POSTGRES_HOST_PROD,
+    database: process.env.POSTGRES_DATABASE_PROD,
+    port: Number(process.env.POSTGRES_PORT_PROD),
+    username: process.env.POSTGRES_USER_PROD,
+    password: process.env.POSTGRES_PASS_PROD,
     entities: [ClientTypeorm, MovieTypeorm, HireTypeorm],
     migrations: ['src/infra/database/typeorm/migrations/*.js'],
   });

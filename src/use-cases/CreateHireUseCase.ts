@@ -1,5 +1,6 @@
 import { Hire } from '../domain/entities/Hire';
 import { IHireRepository } from '../domain/repositories/IHireRepository';
+import { IMailService } from '../domain/services/IMailService';
 import { AppError } from '../shared/errors/AppError';
 import { Either } from '../shared/utils/Either';
 import { CreateHireDTO } from './CreateHireDTO';
@@ -7,10 +8,10 @@ import { CreateHireDTO } from './CreateHireDTO';
 export class CreateHireUseCase {
   constructor(
     private hireRepository: IHireRepository,
-    private emailService: any
+    private emailService: IMailService
   ) {}
 
-  private isValidDate(date: any): boolean {
+  private isValidDate(date: unknown): boolean {
     return date instanceof Date && !isNaN(date.getTime());
   }
 

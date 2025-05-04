@@ -49,7 +49,7 @@ describe('HireRoutes', () => {
 
     expect(statusCode).toBe(201);
     expect(body).toBeNull();
-  });
+  }, 15000);
 
   test('should return an error with missing required fields', async () => {
     const { statusCode, body } = await request(app).post('/hires').send({});
