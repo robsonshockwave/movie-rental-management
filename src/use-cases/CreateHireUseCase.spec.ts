@@ -6,9 +6,9 @@ import { CreateHireUseCase } from './CreateHireUseCase';
 
 describe('CreateHireUseCase', () => {
   let hireRepository: jest.Mocked<IHireRepository>;
-  const emailService = {
-    sendMail: jest.fn(),
-  };
+  // const emailService = {
+  //   sendMail: jest.fn(),
+  // };
 
   beforeEach(() => {
     hireRepository = {
@@ -34,7 +34,7 @@ describe('CreateHireUseCase', () => {
     client: {
       address: 'any_address',
       cpf: 'any_cpf',
-      email: 'any_email',
+      email: 'any_email@email.com',
       id: 'any_id',
       name: 'any_name',
       phone: 'any_phone',
@@ -61,7 +61,7 @@ describe('CreateHireUseCase', () => {
       client: {
         address: 'any_address',
         cpf: 'any_cpf',
-        email: 'any_email',
+        email: 'any_email@email.com',
         id: 'any_id',
         name: 'any_name',
         phone: 'any_phone',
@@ -76,7 +76,8 @@ describe('CreateHireUseCase', () => {
       },
     });
 
-    const sut = new CreateHireUseCase(hireRepository, emailService);
+    // const sut = new CreateHireUseCase(hireRepository, emailService);
+    const sut = new CreateHireUseCase(hireRepository);
 
     const hire = await sut.execute(hireRequestDTO);
 
@@ -92,7 +93,8 @@ describe('CreateHireUseCase', () => {
   });
 
   test('should return error if mandatory parameters are not provided', async () => {
-    const sut = new CreateHireUseCase(hireRepository, emailService);
+    // const sut = new CreateHireUseCase(hireRepository, emailService);
+    const sut = new CreateHireUseCase(hireRepository);
 
     await expect(sut.execute({} as CreateHireDTO)).rejects.toThrow(
       new AppError(AppError.missingMandatoryParameters)
@@ -100,7 +102,8 @@ describe('CreateHireUseCase', () => {
   });
 
   test('should return error if repository or emailService is not provided', async () => {
-    const sut = new CreateHireUseCase(undefined as any, emailService);
+    // const sut = new CreateHireUseCase(undefined as any, emailService);
+    const sut = new CreateHireUseCase(undefined as any);
 
     await expect(sut.execute(hireRequestDTO)).rejects.toThrow(
       new AppError(AppError.dependencies)
@@ -108,7 +111,8 @@ describe('CreateHireUseCase', () => {
   });
 
   test('should return an Either.Left if the return date is less than the request date', async () => {
-    const sut = new CreateHireUseCase(hireRepository, emailService);
+    // const sut = new CreateHireUseCase(hireRepository, emailService);
+    const sut = new CreateHireUseCase(hireRepository);
 
     const output = await sut.execute({
       ...hireRequestDTO,
@@ -120,7 +124,8 @@ describe('CreateHireUseCase', () => {
 
   test('should return an Either.Left if the movie is already hired by the client', async () => {
     hireRepository.thisMovieHiredByClient.mockResolvedValue(true);
-    const sut = new CreateHireUseCase(hireRepository, emailService);
+    // const sut = new CreateHireUseCase(hireRepository, emailService);
+    const sut = new CreateHireUseCase(hireRepository);
 
     const output = await sut.execute(hireRequestDTO);
 

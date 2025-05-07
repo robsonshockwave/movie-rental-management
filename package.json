@@ -9,7 +9,8 @@
     "test:all": "npm test && npm run test:integration",
     "dev": "ts-node-dev --transpile-only --ignore-watch node_modules src/infra/http/server.ts",
     "migration:generate": "ts-node ./node_modules/typeorm/cli.js migration:generate -d src/infra/database/typeorm/setup.ts",
-    "migration:run": "ts-node node_modules/typeorm/cli.js migration:run -d src/infra/database/typeorm/setup.ts"
+    "migration:run": "ts-node node_modules/typeorm/cli.js migration:run -d src/infra/database/typeorm/setup.ts",
+    "queue": "ts-node-dev --transpile-only --ignore-watch node_modules src/infra/http/queue.ts"
   },
   "keywords": [],
   "author": "",

@@ -1,14 +1,14 @@
 import { Hire } from '../domain/entities/Hire';
 import { IHireRepository } from '../domain/repositories/IHireRepository';
 import { IMailService } from '../domain/services/IMailService';
+import { sendMailQueue } from '../infra/http/queue';
 import { AppError } from '../shared/errors/AppError';
 import { Either } from '../shared/utils/Either';
 import { CreateHireDTO } from './CreateHireDTO';
 
 export class CreateHireUseCase {
   constructor(
-    private hireRepository: IHireRepository,
-    private emailService: IMailService
+    private hireRepository: IHireRepository // private emailService: IMailService
   ) {}
 
   private isValidDate(date: unknown): boolean {
@@ -16,7 +16,10 @@ export class CreateHireUseCase {
   }
 
   async execute(data: CreateHireDTO) {
-    if (!this.hireRepository || !this.emailService) {
+    if (
+      !this.hireRepository
+      // || !this.emailService
+    ) {
       throw new AppError(AppError.dependencies);
     }
 
@@ -62,7 +65,16 @@ export class CreateHireUseCase {
     const { client, movie } =
       await this.hireRepository.getHireWithClientAndMovieById(hireCreated.id);
 
-    await this.emailService.sendMail({
+    // await this.emailService.sendMail({
+    //   requested_date: data.requested_date,
+    //   delivery_date: data.delivery_date,
+    //   client_name: client.name,
+    //   cpf: client.cpf,
+    //   email: client.email,
+    //   movie_name: movie.name,
+    // });
+
+    await sendMailQueue.add({
       requested_date: data.requested_date,
       delivery_date: data.delivery_date,
       client_name: client.name,
